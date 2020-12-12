@@ -57,7 +57,7 @@ class LinkDAO extends DAO
         $sql = "
             SELECT * FROM tl_liens
             ORDER BY lien_id DESC
-            LIMIT :quantite, :start
+            LIMIT :quantite OFFSET :start
         ";
 
         $start = ($page - 1) * $linkPerPage;
