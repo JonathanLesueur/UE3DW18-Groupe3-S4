@@ -47,3 +47,14 @@ $app->delete('/api/link/{id}', "Watson\Controller\ApiController::deleteLinkActio
 
 // RSS
 $app->get('/rss/links/{limit}', "Watson\Controller\RssController::getLinksAction")->bind('rss_link');
+
+
+//List link 
+$app->match('/link/{id}', "Watson\Controller\LinkController::countAll")->bind('link');
+
+
+//List link 
+$app->match('admin/link/{page}', "Watson\Controller\LinkController::countAll") ->value('page', 1)->bind('link');
+
+// List user 
+$app->match('admin/user/{page}', "Watson\Controller\LinkController::countAll")->bind('link');
