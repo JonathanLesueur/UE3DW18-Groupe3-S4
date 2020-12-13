@@ -27,7 +27,7 @@ class AdminController {
 
     public function listLinksAction($page, Application $app) {
         $currentPage = (int) $page;
-        $linksPerPage = 5;
+        $linksPerPage = 15;
 
         $nbLinks = $app['dao.link']->countAll();
         $nbPages = ceil($nbLinks / $linksPerPage);
@@ -48,7 +48,7 @@ class AdminController {
 
     public function listUsersAction($page, Application $app) {
         $currentPage = (int) $page;
-        $usersPerPage = 5;
+        $usersPerPage = 10;
 
         $nbUsers = $app['dao.user']->countAll();
         $nbPages = ceil($nbUsers / $usersPerPage);
