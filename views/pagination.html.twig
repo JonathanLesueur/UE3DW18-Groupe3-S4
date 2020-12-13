@@ -1,0 +1,20 @@
+{% if nbPages %}
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li>
+            <a href="{{ path(app.request.get('_route'), { 'page': 1 }) }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% for i in 1..nbPages %}
+            <li><a href="{{ path(app.request.get('_route'), { 'page': i }) }}">{{ i }}</a></li>
+        {% endfor %}
+        
+        <li>
+            <a href="{{ path(app.request.get('_route'), { 'page': nbPages }) }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+{% endif %}
