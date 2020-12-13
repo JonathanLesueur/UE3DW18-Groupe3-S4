@@ -1,7 +1,7 @@
 {% extends "layout.html.twig" %}
 {% set adminMenu = true %}
 
-{% block title %}Administration{% endblock %}
+{% block title %}Users Administration{% endblock %}
 
 {% block content %}
 <h2 class="text-center">{{ block('title') }}</h2>
@@ -10,39 +10,61 @@
     {{ flashMessage }}
 </div>
 {% endfor %}
-<table class="table table-hover table-condensed">
-    <thead>
+<div class="link-container">
+    <div class="admin-top-button">
+        <a href="{{ path('admin') }}" class="watson-button admin-button">
+            < Return to Admin
+        </a>
+        <a href="{{ path('admin_user_add') }}"><button type="button" class="watson-button admin-button"><span class="glyphicon glyphicon-plus"></span> Add user</button></a>
+    </div>  
+    <table class="table table-hover table-condensed">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th></th>  <!-- Actions column -->
+            </tr>
+        </thead>
+        {% for user in users %}
         <tr>
-            <th>Name</th>
-            <th></th>  <!-- Actions column -->
+            <td>{{ user.username }}</a></td>
+            <td>
+                <a href="{{ path('admin_user_edit', { 'id': user.id }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#userDialog{{ user.id }}"><span class="glyphicon glyphicon-remove"></span>
+                </button>
+                <div class="modal fade" id="userDialog{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">Confirmation needed</h4>
+                            </div>
+                            <div class="modal-body">
+                                Do you really want to delete this user ?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <a href="{{ path('admin_user_delete', { 'id': user.id }) }}" class="btn btn-danger">Confirm</a>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+            </td>
         </tr>
-    </thead>
-    {% for user in users %}
-    <tr>
-        <td>{{ user.username }}</a></td>
-        <td>
-            <a href="{{ path('admin_user_edit', { 'id': user.id }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
-            <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#userDialog{{ user.id }}"><span class="glyphicon glyphicon-remove"></span>
-            </button>
-            <div class="modal fade" id="userDialog{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">Confirmation needed</h4>
-                        </div>
-                        <div class="modal-body">
-                            Do you really want to delete this user ?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <a href="{{ path('admin_user_delete', { 'id': user.id }) }}" class="btn btn-danger">Confirm</a>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+        {% endfor %}
+    </table>
+    <div class="pagination">
+        <ul>
+            {% for i in 1..nbPages %}
+                {% if i == currentPage %}
+                    <li class="current">{{ currentPage }}</li>
+                {% else %}
+                    <li class="page-link"><a href="{{ path('admin_list_users', { 'page': i }) }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>  
+        <p>
+            {{ nbUsers }} users in total
+        </p>
+    </div>
+</div>
 {% endblock %}
