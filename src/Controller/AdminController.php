@@ -25,6 +25,12 @@ class AdminController {
             'users' => $users));
     }
 
+    /**
+     * Admin manage links page controller.
+     *
+     * @param $page is the name of the current page specified in URL
+     * @param Application $app Silex application
+     */
     public function listLinksAction($page, Application $app) {
         $currentPage = (int) $page;
         $linksPerPage = 15;
@@ -46,6 +52,12 @@ class AdminController {
         ));
     }
 
+    /**
+     * Admin manage users page controller.
+     *
+     * @param $page is the name of the current page specified in URL
+     * @param Application $app Silex application
+     */
     public function listUsersAction($page, Application $app) {
         $currentPage = (int) $page;
         $usersPerPage = 10;
