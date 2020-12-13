@@ -54,7 +54,7 @@ $app->match('/link/{id}', "Watson\Controller\LinkController::countAll")->bind('l
 
 
 //List link 
-$app->match('admin/link/{page}', "Watson\Controller\LinkController::countAll") ->value('page', 1)->bind('link');
+$app->match('admin/links/{page}', "Watson\Controller\AdminController::listLinksAction")->value('page', 1)->bind('admin_list_links');
 
 // List user 
-$app->match('admin/user/{page}', "Watson\Controller\LinkController::countAll")->bind('link');
+$app->match('admin/users/{page}', "Watson\Controller\AdminController::listUsersAction")->value('page', 1)->bind('admin_list_users');

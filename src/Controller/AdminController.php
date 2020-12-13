@@ -25,6 +25,48 @@ class AdminController {
             'users' => $users));
     }
 
+    public function listLinksAction($page, Application $app) {
+        $currentPage = (int) $page;
+        $linksPerPage = 5;
+
+        $nbLinks = $app['dao.link']->countAll();
+        $nbPages = ceil($nbLinks / $linksPerPage);
+
+        if($currentPage > $nbPages) {
+            $currentPage = $nbPages;
+        }
+
+        $links = $app['dao.link']->findByPage($currentPage, $linksPerPage);
+
+        return $app['twig']->render('admin.listLinks.html.twig', array( 
+            'links' => $links,
+            'nbPages' => $nbPages,
+            'currentPage' => $currentPage,
+            'nbLinks' => $nbLinks
+        ));
+    }
+
+    public function listUsersAction($page, Application $app) {
+        $currentPage = (int) $page;
+        $usersPerPage = 5;
+
+        $nbUsers = $app['dao.user']->countAll();
+        $nbPages = ceil($nbUsers / $usersPerPage);
+
+        if($currentPage > $nbPages) {
+            $currentPage = $nbPages;
+        }
+
+        $users = $app['dao.user']->findByPage($currentPage, $usersPerPage);
+
+        return $app['twig']->render('admin.listUsers.html.twig', array( 
+            'users' => $users,
+            'nbPages' => $nbPages,
+            'currentPage' => $currentPage,
+            'nbUsers' => $nbUsers
+        ));
+    }
+
     /**
      * Add link controller.
      *
